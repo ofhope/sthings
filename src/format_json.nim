@@ -8,3 +8,8 @@ proc main(): void =
 if isMainModule:
   main()
 
+# snake_case
+# camelCase
+# PascalCase
+# kebab-case
+# UPPER_CASE
