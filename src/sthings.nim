@@ -1,3 +1,7 @@
+import strutils, os
+import docopt
+import sthingspkg/levenshtein
+
 let doc = """
 Naval Fate.
 
@@ -6,6 +10,7 @@ Usage:
   sthings (-c=<case> --case=<case>) <sinput>
   sthings (-h | --help)
   sthings --version
+  sthings -l <a> <b>
 
 Options:
   -h --help     Show this screen.
@@ -14,9 +19,6 @@ Options:
   --breaklines  Converts encoded line endings. 
 """
 
-import strutils, os
-import docopt
-
 let args = docopt(doc, version = "Naval Fate 2.0")
 
 proc main(args: Table[string, Value]): void =
@@ -24,6 +26,10 @@ proc main(args: Table[string, Value]): void =
     let str:string = $(args["<sinput>"])
     for line in str.split("\\n"):
       writeLine(stdout, line)
+  elif args["-l"]:
+    let a = args["<a>"]
+    let b = args["<b>"]
+    echo levenshtein($a, $b)
   
 if isMainModule:
   main(args)
