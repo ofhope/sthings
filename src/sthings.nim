@@ -6,28 +6,27 @@ let doc = """
 Naval Fate.
 
 Usage:
-  sthings --breaklines <sinput>
-  sthings (-c=<case> --case=<case>) <sinput>
+  sthings --breaklines <a>
   sthings (-h | --help)
   sthings --version
-  sthings -l <a> <b>
+  sthings --levenshtein <a> <b>
   sthings --couples <words>...
 
 Options:
   -h --help     Show this screen.
   --version     Show version.
   -c=<case>     Case to transform to.
-  --breaklines  Converts encoded line endings. 
+  --breaklines  Converts encoded line endings. Usful for mashed json.
 """
 
 let args = docopt(doc, version = "Naval Fate 2.0")
 
 proc main(args: Table[string, Value]): void =
   if args["--breaklines"]:
-    let str:string = $(args["<sinput>"])
+    let str:string = $(args["<a>"])
     for line in str.split("\\n"):
       writeLine(stdout, line)
-  elif args["-l"]:
+  elif args["--levenshtein"]:
     let a = args["<a>"]
     let b = args["<b>"]
     echo levenshtein($a, $b)
@@ -40,6 +39,7 @@ proc main(args: Table[string, Value]): void =
 if isMainModule:
   main(args)
 
+# sthings --case=<case> <sinput>
 # snake_case
 # camelCase
 # PascalCase
