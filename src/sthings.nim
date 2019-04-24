@@ -1,6 +1,6 @@
 import strutils, os
 import docopt
-import sthingspkg/levenshtein
+import sthingspkg/levenshtein, sthingspkg/words
 
 let doc = """
 Naval Fate.
@@ -11,6 +11,7 @@ Usage:
   sthings (-h | --help)
   sthings --version
   sthings -l <a> <b>
+  sthings --couples <words>...
 
 Options:
   -h --help     Show this screen.
@@ -30,6 +31,11 @@ proc main(args: Table[string, Value]): void =
     let a = args["<a>"]
     let b = args["<b>"]
     echo levenshtein($a, $b)
+  elif args["--couples"]:
+    var words: seq[string] = @[]
+    for w in args["<words>"]:
+      words.add($w)
+    echo wordCouples(words)
   
 if isMainModule:
   main(args)
